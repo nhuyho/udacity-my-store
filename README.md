@@ -26,11 +26,10 @@ npm install
 ## Start server
 On the same terminal, run the command
    ```
-      ng serve
+ng serve
      
 
 #### Sample request:
-```
 Navigate to 
 
 http://localhost:4200/
