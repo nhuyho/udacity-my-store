@@ -42,11 +42,9 @@ export class CartComponent implements OnInit {
     if (this.createForm.invalid) {
       return;
     }
-
     const firstName = this.createForm.get('firstName')?.value;
     this.productService.clearCart();
     this.createForm.reset();
-    this.refresh();
     this.route.navigate([`success/${firstName}/${this.totalPrice}`]);
   }
 
