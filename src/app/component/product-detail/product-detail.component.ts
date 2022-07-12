@@ -39,7 +39,7 @@ export class ProductDetailComponent implements OnInit {
   onSubmit(cartProduct: Product, event: any) {
     let newCartProduct: CartProduct[] = [];
     let message: string = '';
-    let isCartOptionExist: boolean = false;
+    let isCartExist: boolean = false;
 
     const selectIndex = event.target[0].options.selectedIndex;
     const selectedOption = event.target[0].options[selectIndex].value;
@@ -54,12 +54,12 @@ export class ProductDetailComponent implements OnInit {
       message = `New Item '${cartProduct.name}' added to cart.`;
     } else {
       const option: string = newCartProduct[index].option;
-      isCartOptionExist = selectedOption === option;
+      isCartExist = selectedOption === option;
       newCartProduct[index].id = cartProduct.id;
       newCartProduct[index].option = selectedOption;
       message = `${option} Item(s) of '${cartProduct.name}' already exist in cart. Will be updated to ${selectedOption}`;
     }
-    !isCartOptionExist ? this.productService.addToCart(newCartProduct) : null;
+    !isCartExist ? this.productService.addProduct(newCartProduct) : null;
     alert(message);
     this.refresh();
     return false;

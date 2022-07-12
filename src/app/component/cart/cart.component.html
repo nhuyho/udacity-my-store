@@ -1,45 +1,78 @@
 <div *ngIf="cartProducts.length; else emptyCart" class="cart">
     <div class="cart__item">
         <div *ngFor="let cartProduct of cartProducts" class="cart-item">
-            <img class="" src='{{cartProduct.url}}'>
+            <img class="" src="{{ cartProduct.url }}" />
             <div class="cart-panel">
-                <div class="cart-detail">{{ cartProduct.name}}</div>
-                <div class="cart-detail">$ {{ cartProduct.price}}</div>
+                <div class="cart-detail">{{ cartProduct.name }}</div>
+                <div class="cart-detail">$ {{ cartProduct.price }}</div>
                 <div class="cart-detail">
-                    <select (change)="selectChange(cartProduct.id, $event)" style="width: 100px;" class="form-select" aria-label="Default select example">
-                        <option
-                            *ngFor="let product_option of productCount"
-                            [ngValue]="product_option"
-                            [selected]="cartProduct.option === product_option">
-                            {{ product_option }}
-                        </option>
-                    </select>
+                    <select (change)="selectChange(cartProduct.id, $event)" style="width: 100px" class="form-select" aria-label="Default select example">
+            <option
+              *ngFor="let product_option of productCount"
+              [ngValue]="product_option"
+              [selected]="cartProduct.option === product_option"
+            >
+              {{ product_option }}
+            </option>
+          </select>
                 </div>
                 <div class="cart-detail">
-                    <button (click)="deletedItem(cartProduct.id)" class="btn btn-primary">Remove</button>
+                    <button (click)="deletedItem(cartProduct.id)" class="btn btn-primary">
+            Remove
+          </button>
                 </div>
             </div>
         </div>
-        <div class="cart-item"><b>Total Price: {{totalPrice}}</b></div>
+        <div class="cart-item">
+            <b>Total Price: {{ totalPrice }}</b>
+        </div>
     </div>
     <div>
         <form class="form-group" [formGroup]="createForm" (ngSubmit)="onSubmit()">
-            <label>Full Name </label><br />
-            <input class="form-control" type='text' formControlName="firstName" minlength="9" placeholder="Enter First Name">
+            <div>
+                <label>Full Name </label><br />
+                <input class="form-control" type="text" formControlName="firstName" placeholder="Enter First Name" required [ngClass]="{ 'is-invalid': firstName?.touched && firstName?.errors }" />
+
+                <div *ngIf="firstName?.invalid && (firstName?.dirty || firstName?.touched)" class="alert alert-danger mt-2">
+                    <div *ngIf="firstName?.errors?.['required']">
+                        First Name is required.
+                    </div>
+                </div>
+            </div>
             <br />
-            <label>Address </label><br />
-            <input class="form-control" type='text' formControlName='address' minlength="10" placeholder="Enter Address">
+            <div>
+                <label>Address </label><br />
+                <input class="form-control" type="text" formControlName="address" placeholder="Enter Address" [ngClass]="{ 'is-invalid': address?.touched && address?.errors }" />
+                <div *ngIf="address?.invalid && (address?.dirty || address?.touched)" class="alert alert-danger mt-2">
+                    <div *ngIf="address?.errors?.['required']">Address is required.</div>
+                </div>
+            </div>
+
             <br />
-            <label>Credit Card Number </label><br />
-            <input class="form-control" type='text' formControlName='creditCard' minlength="16" maxlength="16" placeholder="(16-digit number)">
+            <div>
+                <label>Credit Card Number </label><br />
+                <input class="form-control" type="text" formControlName="creditCard" minlength="16" maxlength="16" placeholder="(16-digit number)" [ngClass]="{
+            'is-invalid': creditCard?.touched && creditCard?.errors
+          }" />
+
+                <div *ngIf="
+            creditCard?.invalid && (creditCard?.dirty || creditCard?.touched)
+          " class="alert alert-danger mt-2">
+                    <div *ngIf="creditCard?.errors?.['required']">
+                        Credit Card is required.
+                    </div>
+                </div>
+            </div>
+
             <br />
-            <span class="message">We'll never share your payment details with anyone else. </span>
+            <span class="message">We'll never share your payment details with anyone else.
+      </span>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
 </div>
 <ng-template #emptyCart>
     <div class="warning-message">
-        Cart is empty! Please, <a routerLink="/">  add product</a>.
+        Cart is empty! Please, <a routerLink="/"> add product</a>.
     </div>
 </ng-template>
