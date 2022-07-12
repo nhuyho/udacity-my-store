@@ -27,7 +27,7 @@ npm install
 On the same terminal, run the command
    ```
       ng serve
-      ```
+     
 
 #### Sample request:
 ```
