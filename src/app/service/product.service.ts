@@ -17,7 +17,7 @@ export class ProductService {
   getProduct(): Observable<Product[]> {
     return this.http.get<Product[]>('http://localhost:4200/assets/data.json');
   }
-  addToCart(product: CartProduct[]): void {
+  addProduct(product: CartProduct[]): void {
     this.myStorage.setItem('cart', JSON.stringify(product));
   }
   getDetail(id: number): Observable<Product[]> {
