@@ -1,0 +1,45 @@
+<div *ngIf="cartProducts.length; else emptyCart" class="cart">
+    <div class="cart__item">
+        <div *ngFor="let cartProduct of cartProducts" class="cart-item">
+            <img class="" src='{{cartProduct.url}}'>
+            <div class="cart-panel">
+                <div class="cart-detail">{{ cartProduct.name}}</div>
+                <div class="cart-detail">$ {{ cartProduct.price}}</div>
+                <div class="cart-detail">
+                    <select (change)="selectChange(cartProduct.id, $event)" style="width: 100px;" class="form-select" aria-label="Default select example">
+                        <option
+                            *ngFor="let product_option of productCount"
+                            [ngValue]="product_option"
+                            [selected]="cartProduct.option === product_option">
+                            {{ product_option }}
+                        </option>
+                    </select>
+                </div>
+                <div class="cart-detail">
+                    <button (click)="deletedItem(cartProduct.id)" class="btn btn-primary">Remove</button>
+                </div>
+            </div>
+        </div>
+        <div class="cart-item"><b>Total Price: {{totalPrice}}</b></div>
+    </div>
+    <div>
+        <form class="form-group" [formGroup]="createForm" (ngSubmit)="onSubmit()">
+            <label>Full Name </label><br />
+            <input class="form-control" type='text' formControlName="firstName" minlength="9" placeholder="Enter First Name">
+            <br />
+            <label>Address </label><br />
+            <input class="form-control" type='text' formControlName='address' minlength="10" placeholder="Enter Address">
+            <br />
+            <label>Credit Card Number </label><br />
+            <input class="form-control" type='text' formControlName='creditCard' minlength="16" maxlength="16" placeholder="(16-digit number)">
+            <br />
+            <span class="message">We'll never share your payment details with anyone else. </span>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+<ng-template #emptyCart>
+    <div class="warning-message">
+        Cart is empty! Please, <a routerLink="/">  add product</a>.
+    </div>
+</ng-template>

@@ -1,0 +1,44 @@
+.header {
+    background-color: #02b3e4;
+    height: 5rem;
+    position: sticky;
+    color: #ffffff;
+    &__title {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 500;
+        color: #ffffff;
+    }
+    &__menu {
+        text-align: center;
+        margin-right: 10px;
+    }
+    a:first-child {
+        text-align: center;
+        padding: 0 10px;
+        margin-right: 5px;
+        color: #ffffff;
+        text-decoration: none;
+        border-right: 1px solid #ffffff;
+    }
+    a:nth-child(2) {
+        text-align: center;
+        padding: 10px;
+        color: #ffffff;
+        text-decoration: none;
+        i {
+            font-size: 1rem;
+        }
+        #cartAmount {
+            color: white;
+            padding: 1px 7px;
+            border-radius: 50%;
+            background: red;
+            font-size: 13px;
+            position: absolute;
+            font-weight: bold;
+            bottom: 15px;
+            left: 55%;
+        }
+    }
+}

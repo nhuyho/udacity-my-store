@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="row product">
+        <div class="col-4 product__item" *ngFor="let product of products">
+            <a routerLink="product/{{ product.id }}" routerLinkActive="active">
+                <img class="product-image" src='{{ product.url }}'>
+            </a>
+            <div class="product-detail"><b>{{ product.name }}</b></div>
+            <div class="product-detail">$ {{ product.price}}</div>
+            <select name="quantity">
+            <option value="1 ">1</option>
+            <option value="2 ">2</option>
+            <option value="3 ">3</option>
+            <option value="4 ">4</option>
+            <option value="5 ">5</option>
+            <option value="6 ">6</option>
+            <option value="7 ">7</option>
+            <option value="8 ">8</option>
+            <option value="9 ">9</option>
+            <option value="10 ">10</option>
+        </select>
+            <button class="btn btn-primary">Add to cart</button>
+        </div>
+    </div>
+</div>
