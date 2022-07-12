@@ -13,4 +13,3 @@ export interface CartProduct {
   description: string;
   option: string;
 }
-export const productCount: string[] = ['1', '2', '3', '4', '5'];
