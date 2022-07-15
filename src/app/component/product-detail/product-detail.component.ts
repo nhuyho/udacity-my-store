@@ -48,12 +48,12 @@ export class ProductDetailComponent implements OnInit {
     let productInCart;
 
     newProduct = cartProducts;
-    for (let index = 0; index < cartProducts.length; index++) {
+    cartProducts.forEach((cart, index) => {
       const cartItem = cartProducts[index];
       if (cartItem.id === product.id) {
         productInCart = cartItem;
       }
-    }
+    });
     if (productInCart) {
       const existProduct = cartProducts.filter(
         (item) => item.id === product.id
@@ -68,6 +68,6 @@ export class ProductDetailComponent implements OnInit {
       alert(message);
     }
     this.router.navigate(['/cart']);
-    // this.refresh();
+    this.refresh();
   }
 }
