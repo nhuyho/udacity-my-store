@@ -6,13 +6,11 @@
         <h2>{{ product?.name }}</h2>
         <p class="product-item__description">{{ product?.description }}</p>
         <p class="price">{{ product?.price | currency: "EUR" }}</p>
-        <form (ngSubmit)="addProductToCart(product, $event)">
-            <select style="width: 100px" class="product-item-detail form-select" aria-label="Default select example">
-        <option selected value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
+        <form (ngSubmit)="addProductToCart(product)">
+            <select [(ngModel)]="selectedItem" #products style="width: 100px" class="product-item-detail form-select" aria-label="Default select example" [ngModelOptions]="{ standalone: true }">
+        <option *ngFor="let value of productCount" value="{{ value }}">
+          {{ value }}
+        </option>
       </select>
             <input class="btn-add" type="submit" value="Add to Cart" class="mt-2 btn btn-primary" />
         </form>

@@ -10,7 +10,6 @@ import { ProductService } from 'src/app/service/product.service';
 export class HeaderComponent implements OnInit {
   pageTitle: string = 'My Store';
   cartProductList!: CartProduct[];
-  @ViewChild('cartAmount') cartAmount!: ElementRef;
   constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
@@ -21,7 +20,7 @@ export class HeaderComponent implements OnInit {
   calculate(cart: CartProduct[]) {
     let sum = 0;
     cart.forEach((item) => {
-      sum += Number(item.option);
+      sum += Number(item.amount);
     });
     const ele = document.getElementById('cartAmount') as HTMLElement;
     ele.innerHTML = sum.toString();

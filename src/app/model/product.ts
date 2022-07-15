@@ -4,6 +4,7 @@ export interface Product {
   price: number;
   url: string | Blob;
   description: string;
+  amount: string;
 }
 export interface CartProduct {
   id: number;
@@ -11,5 +12,5 @@ export interface CartProduct {
   price: number;
   url: string | Blob;
   description: string;
-  option: string;
+  amount: string;
 }

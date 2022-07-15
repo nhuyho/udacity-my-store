@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CartProduct, Product } from 'src/app/model/product';
 import { ProductService } from 'src/app/service/product.service';
 
@@ -13,9 +13,14 @@ export class ProductDetailComponent implements OnInit {
   products!: Product[];
   quantity: number = 1;
   id!: number;
+  productCount: string[] = ['1', '2', '3', '4', '5'];
+  newProductList!: CartProduct[];
+  selectedItem = '';
+
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -36,16 +41,13 @@ export class ProductDetailComponent implements OnInit {
     window.location.reload();
   }
 
-  addProductToCart(product: Product, event: any): void {
-    let newCartProduct: CartProduct[] = [];
-    let message: string = '';
-    let isCartExist: boolean = false;
-
-    const selectIndex = event.target[0].options.selectedIndex;
-    const selectedOption = event.target[0].options[selectIndex].value;
+  addProductToCart(product: Product): void {
     const cartProducts: CartProduct[] = this.productService.getCartProduct();
-    newCartProduct = cartProducts;
+    let newProduct;
+    let message = '';
     let productInCart;
+
+    newProduct = cartProducts;
     for (let index = 0; index < cartProducts.length; index++) {
       const cartItem = cartProducts[index];
       if (cartItem.id === product.id) {
@@ -53,13 +55,19 @@ export class ProductDetailComponent implements OnInit {
       }
     }
     if (productInCart) {
-      productInCart.option += selectedOption;
+      const existProduct = cartProducts.filter(
+        (item) => item.id === product.id
+      );
+      newProduct = existProduct;
+      newProduct[0].amount = this.selectedItem;
+      existProduct ? this.productService.addProduct(newProduct) : null;
     } else {
-      newCartProduct.push(Object.assign(product, { option: selectedOption }));
-      this.productService.addProduct(newCartProduct);
+      newProduct.push(Object.assign(product, { amount: this.selectedItem }));
+      this.productService.addProduct(newProduct);
       message = `New Item '${product.name}' added to cart.`;
+      alert(message);
     }
-    alert(message);
-    this.refresh();
+    this.router.navigate(['/cart']);
+    // this.refresh();
   }
 }

@@ -6,13 +6,13 @@
                 <div class="cart-detail">{{ cartProduct.name }}</div>
                 <div class="cart-detail">$ {{ cartProduct.price }}</div>
                 <div class="cart-detail">
-                    <select (change)="selectChange(cartProduct.id, $event)" style="width: 100px" class="form-select" aria-label="Default select example">
+                    <select #cart (change)="selectChange(cart.value, cartProduct)" style="width: 100px" class="form-select" aria-label="Default select example">
             <option
-              *ngFor="let product_option of productCount"
-              [ngValue]="product_option"
-              [selected]="cartProduct.option === product_option"
+              *ngFor="let option of productCount"
+              [ngValue]="option"
+              [selected]="cartProduct.amount === option"
             >
-              {{ product_option }}
+              {{ option }}
             </option>
           </select>
                 </div>
@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="cart-item">
-            <b>Total Price: {{ totalPrice }}</b>
+            <b>Total Price: {{ totalPrice }} $</b>
         </div>
     </div>
     <div>
