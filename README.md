@@ -14,7 +14,7 @@ Start coding by: Nhu Y Ho
 - Clone this repo : https://github.com/nhuyho/udacity-my-store.git;
 - Remove git remote
 - Add new git remote to new service repo
-- Update project name at (package.json, newrelic,...)
+- Update project name at (package.json,...)
 
 ## Dependencies 
 
@@ -31,10 +31,9 @@ ng serve
 
 #### Sample request:
 Navigate to 
-
 http://localhost:4200/
 
- The app will automatically reload if you change any of the source files.
+The app will automatically reload if you change any of the source files.
 
 ## References
 

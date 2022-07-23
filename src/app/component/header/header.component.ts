@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { CartProduct, Product } from 'src/app/model/product';
+import { Product } from 'src/app/model/product';
 import { ProductService } from 'src/app/service/product.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { ProductService } from 'src/app/service/product.service';
 })
 export class HeaderComponent implements OnInit {
   pageTitle: string = 'My Store';
-  cartProductList!: CartProduct[];
+  cartProductList!: Product[];
   constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
     this.calculate(this.cartProductList);
   }
 
-  calculate(cart: CartProduct[]) {
+  calculate(cart: Product[]) {
     let sum = 0;
     cart.forEach((item) => {
       sum += Number(item.amount);

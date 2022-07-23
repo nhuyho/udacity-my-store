@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CartProduct, Product } from 'src/app/model/product';
+import * as e from 'express';
+import { Product } from 'src/app/model/product';
 import { ProductService } from 'src/app/service/product.service';
 
 @Component({
@@ -14,9 +15,7 @@ export class ProductDetailComponent implements OnInit {
   quantity: number = 1;
   id!: number;
   productCount: string[] = ['1', '2', '3', '4', '5'];
-  newProductList!: CartProduct[];
   selectedItem = '';
-
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
@@ -42,32 +41,21 @@ export class ProductDetailComponent implements OnInit {
   }
 
   addProductToCart(product: Product): void {
-    const cartProducts: CartProduct[] = this.productService.getCartProduct();
-    let newProduct;
-    let message = '';
-    let productInCart;
-
-    newProduct = cartProducts;
-    cartProducts.forEach((cart, index) => {
-      const cartItem = cartProducts[index];
-      if (cartItem.id === product.id) {
-        productInCart = cartItem;
-      }
-    });
+    const cartProducts: Product[] = this.productService.getCartProduct();
+    let productInCart = cartProducts.find((ele) => ele.id === product.id);
     if (productInCart) {
-      const existProduct = cartProducts.filter(
-        (item) => item.id === product.id
-      );
-      newProduct = existProduct;
-      newProduct[0].amount = this.selectedItem;
-      existProduct ? this.productService.addProduct(newProduct) : null;
+      cartProducts[0].amount = this.selectedItem;
+      cartProducts ? this.productService.addProduct(cartProducts) : null;
     } else {
-      newProduct.push(Object.assign(product, { amount: this.selectedItem }));
-      this.productService.addProduct(newProduct);
-      message = `New Item '${product.name}' added to cart.`;
+      cartProducts.push(Object.assign(product, { amount: this.selectedItem }));
+      this.productService.addProduct(cartProducts);
+      const message = `New Item '${product.name}' added to cart.`;
       alert(message);
     }
     this.router.navigate(['/cart']);
     this.refresh();
+  }
+  selectedChange(event: any) {
+    console.log(event.target);
   }
 }

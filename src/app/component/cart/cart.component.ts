@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CartProduct, Product } from 'src/app/model/product';
+import { Product } from 'src/app/model/product';
 import { ProductService } from 'src/app/service/product.service';
 
 @Component({
@@ -15,7 +15,7 @@ import { ProductService } from 'src/app/service/product.service';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
-  cartProducts!: CartProduct[];
+  cartProducts!: Product[];
   totalPrice: number | string = '';
   productCount: string[] = ['1', '2', '3', '4', '5'];
   createForm!: FormGroup;
@@ -30,7 +30,6 @@ export class CartComponent implements OnInit {
   ngOnInit(): void {
     this.cartProducts = this.productService.getCartProduct();
     this.calculateTotalAmount();
-
     this.createForm = this.fb.group({
       firstName: ['', Validators.required],
       address: ['', [Validators.required]],
@@ -53,10 +52,10 @@ export class CartComponent implements OnInit {
     window.location.reload();
   }
 
-  selectChange(value: string, product: CartProduct) {
+  selectChange(value: string, product: Product) {
     let index = this.cartProducts.indexOf(product);
     this.cartProducts[index] = product;
-    this.cartProducts[0].amount = value;
+    this.cartProducts[index].amount = value;
     localStorage.setItem('products', JSON.stringify(this.cartProducts));
     this.refresh();
     this.calculateTotalAmount();
@@ -72,13 +71,14 @@ export class CartComponent implements OnInit {
   deletedItem(id: number) {
     let storageProducts = this.productService.getCartProduct();
     let products = storageProducts.filter(
-      (product: CartProduct) => product.id !== id
+      (product: Product) => product.id !== id
     );
     window.localStorage.clear();
     localStorage.setItem('products', JSON.stringify(products));
     this.refresh();
     this.calculateTotalAmount();
   }
+
   get firstName() {
     return this.createForm.get('firstName');
   }
