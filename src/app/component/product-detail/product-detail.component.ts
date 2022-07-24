@@ -15,7 +15,7 @@ export class ProductDetailComponent implements OnInit {
   quantity: number = 1;
   id!: number;
   productCount: string[] = ['1', '2', '3', '4', '5'];
-  selectedItem = '';
+  selectedItem = '1';
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
@@ -39,7 +39,9 @@ export class ProductDetailComponent implements OnInit {
   refresh(): void {
     window.location.reload();
   }
-
+  selectedChange(value: any) {
+    this.selectedItem = value;
+  }
   addProductToCart(product: Product): void {
     const cartProducts: Product[] = this.productService.getCartProduct();
     let productInCart = cartProducts.find((ele) => ele.id === product.id);
@@ -51,11 +53,8 @@ export class ProductDetailComponent implements OnInit {
       this.productService.addProduct(cartProducts);
       const message = `New Item '${product.name}' added to cart.`;
       alert(message);
+      this.refresh();
     }
-    this.router.navigate(['/cart']);
-    this.refresh();
-  }
-  selectedChange(event: any) {
-    console.log(event.target);
+    // this.router.navigate(['/cart']);
   }
 }
