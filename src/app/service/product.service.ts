@@ -1,34 +1,41 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 import { Product } from '../model/product';
-
+import { tap } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  myStorage = window.localStorage;
-  URL = 'http://localhost:4200/assets/data.json';
+  storage = window.localStorage;
+  apiUrl = 'http://localhost:4200/assets/data.json';
 
-  constructor(private http: HttpClient) {}
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+      return of(result as T);
+    };
   }
+  constructor(private http: HttpClient) {}
 
   getProduct(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.URL);
+    return this.http.get<Product[]>(this.apiUrl);
   }
   addProduct(product: Product[]): void {
-    this.myStorage.setItem('products', JSON.stringify(product));
-  }
-  getDetail(id: number): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.URL}/product/${id}`);
+    this.storage.setItem('products', JSON.stringify(product));
   }
   getCartProduct() {
-    const getProduct = this.myStorage.getItem('products');
+    const getProduct = this.storage.getItem('products');
     return getProduct ? JSON.parse(getProduct) : [];
   }
   clearCart(): void {
-    this.myStorage.clear();
+    this.storage.clear();
+  }
+
+  getProductByID(id: number): Observable<Product> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http
+      .get<Product>(url)
+      .pipe(catchError(this.handleError<Product>(`getProduct id=${id}`)));
   }
 }

@@ -1,15 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as e from 'express';
+
+import { Subject } from 'rxjs';
 import { Product } from 'src/app/model/product';
 import { ProductService } from 'src/app/service/product.service';
-
+import { takeUntil } from 'rxjs';
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.scss'],
 })
 export class ProductDetailComponent implements OnInit {
+  private ngUnsubscribe = new Subject<void>();
   product!: Product;
   products!: Product[];
   quantity: number = 1;
@@ -26,35 +28,46 @@ export class ProductDetailComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.id = Number(params.get('id'));
     });
-    this.productService.getProduct().subscribe((res) => {
-      this.products = res;
-      this.product = this.getProductById(this.id);
-    });
+    this.productService
+      .getProduct()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (res) => {
+          this.products = res;
+          this.product = this.getProductDetails(this.id);
+        },
+        error: (err) => console.log(err),
+      });
   }
 
-  getProductById(id: number) {
-    return this.products.filter((product) => product.id === id)[0];
+  getProductDetails(id: any) {
+    return this.products.filter((item) => item.id === id)[0];
   }
 
-  refresh(): void {
-    window.location.reload();
-  }
   selectedChange(value: any) {
     this.selectedItem = value;
   }
+
   addProductToCart(product: Product): void {
     const cartProducts: Product[] = this.productService.getCartProduct();
     let productInCart = cartProducts.find((ele) => ele.id === product.id);
     if (productInCart) {
-      cartProducts[0].amount = this.selectedItem;
-      cartProducts ? this.productService.addProduct(cartProducts) : null;
+      productInCart.amount = this.selectedItem;
+      productInCart ? this.productService.addProduct(cartProducts) : null;
     } else {
       cartProducts.push(Object.assign(product, { amount: this.selectedItem }));
       this.productService.addProduct(cartProducts);
-      const message = `New Item '${product.name}' added to cart.`;
+      const message = `${product.name} has been added to your cart.`;
       alert(message);
-      this.refresh();
     }
-    // this.router.navigate(['/cart']);
+    this.router.navigate(['/cart']);
+  }
+  refresh(): void {
+    window.location.reload();
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 }

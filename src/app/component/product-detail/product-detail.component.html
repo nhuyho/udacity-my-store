@@ -5,12 +5,11 @@
         <p class="product-item__description">{{ product?.description }}</p>
         <p class="price">{{ product?.price | currency: "EUR" }}</p>
         <form (ngSubmit)="addProductToCart(product)">
-            <select #products style="width: 100px" class="product-item-detail form-select" (change)="selectedChange(products.value)">
+            <select #products style="width: 100px" class="product-item-detail form-select" (ngModelChange)="selectedChange($event)">
         <option *ngFor="let value of productCount" value="{{ value }}">
           {{ value }}
         </option>
       </select>
-
             <input class="btn-add" type="submit" value="Add to Cart" class="mt-2 btn btn-primary" />
         </form>
         <div>

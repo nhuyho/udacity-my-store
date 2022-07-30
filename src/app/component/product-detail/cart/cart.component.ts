@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -15,7 +15,8 @@ import { ProductService } from 'src/app/service/product.service';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
-  cartProducts!: Product[];
+  cartProducts: Product[] = [];
+  @Input() newProduct!: Product[];
   totalPrice: number | string = '';
   productCount: string[] = ['1', '2', '3', '4', '5'];
   createForm!: FormGroup;
@@ -85,7 +86,6 @@ export class CartComponent implements OnInit {
   get address() {
     return this.createForm.get('address');
   }
-
   get creditCard() {
     return this.createForm.get('creditCard');
   }

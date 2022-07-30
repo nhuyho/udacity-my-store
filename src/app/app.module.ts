@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -6,21 +6,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './component/header/header.component';
-import { ConfirmationComponent } from './component/confirmation/confirmation.component';
 import { ProductListComponent } from './component/product-list/product-list.component';
 import { ProductDetailComponent } from './component/product-detail/product-detail.component';
 import { CheckoutFromComponent } from './component/checkout-from/checkout-from.component';
-import { CartComponent } from './component/cart/cart.component';
+import { CartComponent } from './component/product-detail/cart/cart.component';
+import { ProductComponent } from './component/product/product.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    ConfirmationComponent,
     ProductListComponent,
     ProductDetailComponent,
     CheckoutFromComponent,
     CartComponent,
+    ProductComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,5 +31,6 @@ import { CartComponent } from './component/cart/cart.component';
   ],
   providers: [],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}
