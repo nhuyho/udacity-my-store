@@ -18,6 +18,7 @@ export class ProductDetailComponent implements OnInit {
   id!: number;
   productCount: string[] = ['1', '2', '3', '4', '5'];
   selectedItem = '1';
+
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
@@ -62,6 +63,7 @@ export class ProductDetailComponent implements OnInit {
     }
     this.router.navigate(['/cart']);
   }
+
   refresh(): void {
     window.location.reload();
   }

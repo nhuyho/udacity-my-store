@@ -5,7 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Product } from 'src/app/model/product';
 import { ProductService } from 'src/app/service/product.service';
 
@@ -30,7 +30,7 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     this.cartProducts = this.productService.getCartProduct();
-    this.calculateTotalAmount();
+    this.calculateTotal();
     this.createForm = this.fb.group({
       firstName: ['', Validators.required],
       address: ['', [Validators.required]],
@@ -54,30 +54,30 @@ export class CartComponent implements OnInit {
   }
 
   selectChange(value: string, product: Product) {
-    let index = this.cartProducts.indexOf(product);
+    const index = this.cartProducts.indexOf(product);
     this.cartProducts[index] = product;
     this.cartProducts[index].amount = value;
     localStorage.setItem('products', JSON.stringify(this.cartProducts));
     this.refresh();
-    this.calculateTotalAmount();
+    this.calculateTotal();
   }
 
-  calculateTotalAmount() {
+  calculateTotal() {
     this.totalPrice = this.cartProducts.reduce((acc, item) => {
-      return acc + item.price;
+      this.totalPrice = parseFloat((acc + item.price).toFixed(2));
+      return this.totalPrice;
     }, 0);
-    this.totalPrice = Number(this.totalPrice.toFixed(2));
   }
 
   deletedItem(id: number) {
-    let storageProducts = this.productService.getCartProduct();
-    let products = storageProducts.filter(
+    const storageProducts = this.productService.getCartProduct();
+    const products = storageProducts.filter(
       (product: Product) => product.id !== id
     );
     window.localStorage.clear();
     localStorage.setItem('products', JSON.stringify(products));
     this.refresh();
-    this.calculateTotalAmount();
+    this.calculateTotal();
   }
 
   get firstName() {
