@@ -5,6 +5,8 @@ import { Subject } from 'rxjs';
 import { Product } from 'src/app/model/product';
 import { ProductService } from 'src/app/service/product.service';
 import { takeUntil } from 'rxjs';
+import { CartService } from 'src/app/service/cart.service';
+
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
@@ -22,6 +24,7 @@ export class ProductDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
+    private cartService: CartService,
     private router: Router
   ) {}
 
@@ -50,7 +53,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   addProductToCart(product: Product): void {
-    const cartProducts: Product[] = this.productService.getCartProduct();
+    const cartProducts: Product[] = this.cartService.getCartProduct();
     let productInCart = cartProducts.find((ele) => ele.id === product.id);
     if (productInCart) {
       productInCart.amount = this.selectedItem;

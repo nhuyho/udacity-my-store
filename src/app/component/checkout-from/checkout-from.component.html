@@ -1,15 +1,19 @@
 <div class="confirmation">
-    <div class="confirmation__items ">
+    <div class="confirmation__items">
         <div class="confirmation__title">
             Success! <i class="fa fa-star-half-o" aria-hidden="true"></i>
         </div>
-        <div class="confirmation__item">Thank you, <b>{{ firstName }}</b></div>
-        <div class="confirmation__item">Your <b>${{ totalPrice }}</b> order is confirmed!</div>
-        <div class="confirmation__item">Please allow 1-3 business day(s) for shipping.</div>
         <div class="confirmation__item">
-            <a routerLink="/">
-                    Return to product list
-                </a>
+            Thank you, <b>{{ firstName }}</b>
+        </div>
+        <div class="confirmation__item">
+            Your <b>${{ totalPrice }}</b> order is confirmed!
+        </div>
+        <div class="confirmation__item">
+            Please allow 1-3 business day(s) for shipping.
+        </div>
+        <div class="confirmation__item">
+            <a routerLink="/"> Return to product list </a>
         </div>
     </div>
 </div>

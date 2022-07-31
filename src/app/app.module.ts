@@ -9,9 +9,11 @@ import { HeaderComponent } from './component/header/header.component';
 import { ProductListComponent } from './component/product-list/product-list.component';
 import { ProductDetailComponent } from './component/product-detail/product-detail.component';
 import { CheckoutFromComponent } from './component/checkout-from/checkout-from.component';
-import { CartComponent } from './component/product-detail/cart/cart.component';
 import { ProductComponent } from './component/product/product.component';
-
+import { CartComponent } from './component/cart/cart.component';
+import { UserInfoComponent } from './component/cart/user-info/user-info.component';
+import { ToastModule } from 'primeng/toast';
+import { MenuItem, MessageService } from 'primeng/api';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,6 +23,7 @@ import { ProductComponent } from './component/product/product.component';
     CheckoutFromComponent,
     CartComponent,
     ProductComponent,
+    UserInfoComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,8 +31,9 @@ import { ProductComponent } from './component/product/product.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    ToastModule,
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

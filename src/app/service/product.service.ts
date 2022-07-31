@@ -24,13 +24,6 @@ export class ProductService {
   addProduct(product: Product[]): void {
     this.storage.setItem('products', JSON.stringify(product));
   }
-  getCartProduct() {
-    const getProduct = this.storage.getItem('products');
-    return getProduct ? JSON.parse(getProduct) : [];
-  }
-  clearCart(): void {
-    this.storage.clear();
-  }
 
   getProductByID(id: number): Observable<Product> {
     const url = `${this.apiUrl}/${id}`;

@@ -6,11 +6,12 @@
         <b>{{ productItem.name }}</b>
     </div>
     <div class="product-detail">$ {{ productItem.price }}</div>
-    <select name="quantity">
-    <option value="1 ">1</option>
-    <option value="2 ">2</option>
-    <option value="3 ">3</option>
-    <option value="4 ">4</option>
-  </select>
-    <button class="btn btn-primary">Add to cart</button>
+    <form (ngSubmit)="addProductToCart(productItem)">
+        <select [(ngModel)]="selectedItem" style="width: 100px" class="product-item-detail form-select" (ngModelChange)="selectedChange($event)" [ngModelOptions]="{ standalone: true }">
+      <option *ngFor="let value of productCount" value="{{ value }}">
+        {{ value }}
+      </option>
+    </select>
+        <input class="btn-add" type="submit" value="Add to Cart" class="mt-2 btn btn-primary" />
+    </form>
 </div>

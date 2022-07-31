@@ -1,0 +1,54 @@
+<div>
+    <form class="form-group" [formGroup]="createForm" (ngSubmit)="onSubmit()">
+        <div>
+            <label>Full Name </label><br />
+            <input class="form-control" type="text" formControlName="firstName" placeholder="Enter First Name" required [ngClass]="{
+          'is-invalid': submitted && firstName?.touched && firstName?.errors
+        }" />
+
+            <div *ngIf="firstName?.invalid && (firstName?.dirty || firstName?.touched)" class="alert alert-danger mt-2">
+                <div *ngIf="firstName?.errors?.['required']">
+                    First Name is required.
+                </div>
+                <div *ngIf="firstName?.errors?.['minlength']">
+                    Name must be at least 4 characters long.
+                </div>
+
+                <div *ngIf="firstName?.errors?.['minlength']">
+                    Name must be at least 4 characters long.
+                </div>
+            </div>
+        </div>
+        <br />
+        <div>
+            <label>Address </label><br />
+            <input class="form-control" type="text" formControlName="address" placeholder="Enter Address" [ngClass]="{
+          'is-invalid': submitted && address?.touched && address?.errors
+        }" />
+            <div *ngIf="address?.invalid && (address?.dirty || address?.touched)" class="alert alert-danger mt-2">
+                <div *ngIf="address?.errors?.['required']">Address is required.</div>
+            </div>
+        </div>
+
+        <br />
+        <div>
+            <label>Credit Card Number </label><br />
+            <input class="form-control" type="number" formControlName="creditCard" maxlength="16" placeholder="(16-digit number)" [ngClass]="{
+          'is-invalid': submitted && creditCard?.touched && creditCard?.errors
+        }" />
+
+            <div *ngIf="
+          creditCard?.invalid && (creditCard?.dirty || creditCard?.touched)
+        " class="alert alert-danger mt-2">
+                <div *ngIf="creditCard?.errors?.['required']">
+                    Credit Card is required or please enter number bellow.
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <span class="message">We'll never share your payment details with anyone else.
+    </span>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
